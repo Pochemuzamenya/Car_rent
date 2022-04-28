@@ -26,12 +26,19 @@ public class EmployeeDao implements Dao<Employee> {
 
     @Override
     public Optional<Employee> findById(Integer id) {
-        return null;
+        return Optional.ofNullable(sessionFactory.withTransaction(
+                session -> session.createQuery("FROM Employee e WHERE e.id = :id", Employee.class)
+                        .setParameter("id", id)
+                        .getSingleResultOrNull()
+        ).await().indefinitely());
     }
 
     @Override
     public List<Employee> findAll() {
-        return null;
+        return sessionFactory.withTransaction(
+                session -> session.createQuery("SELECT e FROM Employee e", Employee.class)
+                        .getResultList())
+                .await().indefinitely();
     }
 
     @Override
@@ -56,8 +63,5 @@ public class EmployeeDao implements Dao<Employee> {
     }
 
     //TODO:
-    // delete(not working now),
-    // update,
-    // findAll,
-    // findById
+    // update
 }
