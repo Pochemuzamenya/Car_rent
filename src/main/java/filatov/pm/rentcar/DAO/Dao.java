@@ -1,7 +1,5 @@
 package filatov.pm.rentcar.DAO;
 
-import filatov.pm.rentcar.entity.Employee;
-
 import java.util.List;
 import java.util.Optional;
 
