@@ -1,7 +1,6 @@
 package filatov.pm.rentcar.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,9 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

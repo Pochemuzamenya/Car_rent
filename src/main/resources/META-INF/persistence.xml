@@ -6,7 +6,7 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <class>org.hibernate.reactive.example.session.Employee</class>
-        <!--<class>org.hibernate.reactive.example.session.Book</class>-->
+        <class>org.hibernate.reactive.example.session.Car</class>
 
         <properties>
             <!-- MySQL -->
