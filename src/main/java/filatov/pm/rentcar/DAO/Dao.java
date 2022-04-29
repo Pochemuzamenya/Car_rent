@@ -11,9 +11,11 @@ public interface Dao<T> {
 
     Optional<T> findById(Integer id);
 
+    Optional<T> findByName(String name);
+
     List<T> findAll();
 
-    void update(T t, String[] params);
+    void update(T t, T e);
 
     void delete(Integer id);
 

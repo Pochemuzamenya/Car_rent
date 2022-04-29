@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 
 @Data
@@ -23,4 +24,17 @@ public class Employee {
     private String login;
     @NotNull @Size(min = 8)
     private  String password;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(name, employee.name) && Objects.equals(login, employee.login) && Objects.equals(password, employee.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, login, password);
+    }
 }

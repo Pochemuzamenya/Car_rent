@@ -34,6 +34,15 @@ public class EmployeeDao implements Dao<Employee> {
     }
 
     @Override
+    public Optional<Employee> findByName(String name) {
+        return Optional.ofNullable(sessionFactory.withTransaction(
+                session -> session.createQuery("FROM Employee e WHERE e.name =:name", Employee.class)
+                        .setParameter("name", name)
+                        .getSingleResultOrNull()
+        ).await().indefinitely());
+    }
+
+    @Override
     public List<Employee> findAll() {
         return sessionFactory.withTransaction(
                 session -> session.createQuery("SELECT e FROM Employee e", Employee.class)
@@ -42,8 +51,15 @@ public class EmployeeDao implements Dao<Employee> {
     }
 
     @Override
-    public void update(Employee employee, String[] params) {
-
+    public void update(Employee employee, Employee updateEmployee) {
+        sessionFactory.withTransaction(
+                session -> session.find(Employee.class, employee.getId())
+                        .invoke(e -> {
+                            e.setLogin(updateEmployee.getLogin());
+                            e.setName(updateEmployee.getName());
+                            e.setPassword(updateEmployee.getPassword());
+                        })
+        ).await().indefinitely();
     }
 
     @Override
@@ -61,7 +77,4 @@ public class EmployeeDao implements Dao<Employee> {
                         (session, tx) -> session.createQuery("delete Employee").executeUpdate())
                 .await().indefinitely();
     }
-
-    //TODO:
-    // update
 }

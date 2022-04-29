@@ -12,6 +12,7 @@ public class EmployeeDaoTest {
     Dao<Employee> service = new EmployeeDao();
     Employee employee1 = new Employee();
     Employee employee2 = new Employee();
+    Employee employee3 = new Employee();
 
     @Before
     public void init(){
@@ -21,24 +22,31 @@ public class EmployeeDaoTest {
         employee2.setLogin("emp2");
         employee2.setName("pepega");
         employee2.setPassword("pepegalul");
+        employee3.setLogin("testlogin");
+        employee3.setName("testname");
+        employee3.setPassword("testpassword");
         service.save(employee1);
-    }
-
-    @After
-    public void deleteAll() {
-        service.deleteAll();
+        service.save(employee2);
     }
 
     @Test
     public void save() {
-        service.save(employee2);
+        service.save(employee3);
+        Optional<Employee> byName = service.findByName(employee3.getName());
+        assert byName.isPresent() && byName.get().equals(employee3);
     }
 
-
+    @Test
+    public void findByName(){
+        Optional<Employee> pepega = service.findByName("pepega");
+        assert pepega.isPresent() && pepega.get().getName().equals("pepega");
+    }
 
     @Test
     public void delete() {
-        service.delete((Integer)1);
+        service.delete(1);
+        Optional<Employee> byId = service.findById(1);
+        assert byId.isEmpty();
     }
 
     @Test
@@ -48,8 +56,14 @@ public class EmployeeDaoTest {
     }
 
     @Test
+    public void update() {
+        service.update(employee1, employee2);
+        Optional<Employee> byId = service.findById(employee1.getId());
+        assert byId.isPresent() && byId.get().equals(employee2);
+    }
+    @Test
     public void findById(){
-        Optional<Employee> byId = service.findById((Integer) 1);
-        System.out.println(byId);
+        Optional<Employee> byId = service.findById(2);
+        assert byId.isPresent() && byId.get().equals(employee2);
     }
 }
