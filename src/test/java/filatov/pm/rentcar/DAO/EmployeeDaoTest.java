@@ -1,15 +1,28 @@
 package filatov.pm.rentcar.DAO;
 
 import filatov.pm.rentcar.entity.Employee;
+import org.hibernate.reactive.mutiny.Mutiny;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 
 public class EmployeeDaoTest {
-    Dao<Employee> service = new EmployeeDao();
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("factory");
+
+    private final Dao<Employee> service = new EmployeeDao(emf.unwrap(Mutiny.SessionFactory.class));
+
     Employee employee1 = new Employee();
     Employee employee2 = new Employee();
     Employee employee3 = new Employee();
