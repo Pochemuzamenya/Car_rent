@@ -1,20 +1,23 @@
 package filatov.pm.rentcar.DAO;
 
 import filatov.pm.rentcar.entity.Employee;
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.reactive.mutiny.Mutiny;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 
+@Component
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class EmployeeDao implements Dao<Employee> {
 
     private static final Logger log = LogManager.getLogger(EmployeeDao.class);
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("factory");
-    Mutiny.SessionFactory sessionFactory = emf.unwrap(Mutiny.SessionFactory.class);
+
+    Mutiny.SessionFactory sessionFactory;
 
     @Override
     public void save(Employee employee) {
