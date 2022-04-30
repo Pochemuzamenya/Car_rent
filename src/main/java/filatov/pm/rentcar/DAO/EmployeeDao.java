@@ -15,7 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class EmployeeDao implements Dao<Employee> {
 
-    private static final Logger log = LogManager.getLogger(EmployeeDao.class);
+    private static final Logger log = LogManager.getLogger();
 
     Mutiny.SessionFactory sessionFactory;
 
@@ -24,7 +24,7 @@ public class EmployeeDao implements Dao<Employee> {
         sessionFactory.withTransaction(
                         session -> session.persist(employee))
                 .await().indefinitely();
-        log.trace(employee + " saved");
+        log.info(employee + " saved");
     }
 
     @Override
