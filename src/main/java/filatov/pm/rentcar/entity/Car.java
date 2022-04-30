@@ -30,6 +30,8 @@ public class Car {
     private Double rentalPrice;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @Enumerated(EnumType.STRING)
+    private CarState state;
 
     @Override
     public boolean equals(Object o) {

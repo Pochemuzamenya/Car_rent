@@ -64,6 +64,7 @@ public class CarDao implements Dao<Car> {
                             c.setReleaseDate(e.getReleaseDate());
                             c.setStatus(e.getStatus());
                             c.setRentalPrice(e.getRentalPrice());
+                            c.setState(e.getState());
                         })
         ).await().indefinitely();
     }
