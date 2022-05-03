@@ -1,7 +1,6 @@
 package filatov.pm.rentcar.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,11 +37,11 @@ public class Car {
         if (this == o) return true;
         if (!(o instanceof Car)) return false;
         Car car = (Car) o;
-        return model.equals(car.model) && mark.equals(car.mark) && releaseDate.equals(car.releaseDate) && carBody.equals(car.carBody) && rentalPrice.equals(car.rentalPrice) && status == car.status;
+        return model.equals(car.model) && mark.equals(car.mark) && releaseDate.equals(car.releaseDate) && carBody.equals(car.carBody) && rentalPrice.equals(car.rentalPrice) && status == car.status && state == car.state;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model, mark, releaseDate, carBody, rentalPrice, status);
+        return Objects.hash(model, mark, releaseDate, carBody, rentalPrice, status, state);
     }
 }

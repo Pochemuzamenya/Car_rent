@@ -1,6 +1,7 @@
-package filatov.pm.rentcar.DAO;
+package filatov.pm.rentcar.DAO.dao;
 
-import filatov.pm.rentcar.entity.Car;
+import filatov.pm.rentcar.DAO.dao.Dao;
+import filatov.pm.rentcar.entity.Employee;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,58 +14,54 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class CarDao implements Dao<Car> {
+public class EmployeeDao implements Dao<Employee> {
 
     private static final Logger log = LogManager.getLogger();
 
     Mutiny.SessionFactory sessionFactory;
 
     @Override
-    public void save(Car car) {
+    public void save(Employee employee) {
         sessionFactory.withTransaction(
-                        session -> session.persist(car))
+                        session -> session.persist(employee))
                 .await().indefinitely();
-        log.trace(car + " saved");
+        log.info(employee + " saved");
     }
 
     @Override
-    public Optional<Car> findById(Integer id) {
+    public Optional<Employee> findById(Integer id) {
         return Optional.ofNullable(sessionFactory.withTransaction(
-                session -> session.createQuery("FROM Car c WHERE c.id = :id", Car.class)
+                session -> session.createQuery("FROM Employee e WHERE e.id =:id", Employee.class)
                         .setParameter("id", id)
                         .getSingleResultOrNull()
         ).await().indefinitely());
     }
 
     @Override
-    public Optional<Car> findByName(String name) {
+    public Optional<Employee> findByName(String name) {
         return Optional.ofNullable(sessionFactory.withTransaction(
-                session -> session.createQuery("FROM Car c WHERE c.model =:name", Car.class)
+                session -> session.createQuery("FROM Employee e WHERE e.name =:name", Employee.class)
                         .setParameter("name", name)
                         .getSingleResultOrNull()
         ).await().indefinitely());
     }
 
     @Override
-    public List<Car> findAll() {
+    public List<Employee> findAll() {
         return sessionFactory.withTransaction(
-                        session -> session.createQuery("SELECT c FROM Car c", Car.class)
-                                .getResultList())
+                session -> session.createQuery("SELECT e FROM Employee e", Employee.class)
+                        .getResultList())
                 .await().indefinitely();
     }
 
     @Override
-    public void update(Car car, Car e) {
+    public void update(Employee employee, Employee updateEmployee) {
         sessionFactory.withTransaction(
-                session -> session.find(Car.class, car.getId())
-                        .invoke(c -> {
-                            c.setCarBody(e.getCarBody());
-                            c.setMark(e.getMark());
-                            c.setModel(e.getModel());
-                            c.setReleaseDate(e.getReleaseDate());
-                            c.setStatus(e.getStatus());
-                            c.setRentalPrice(e.getRentalPrice());
-                            c.setState(e.getState());
+                session -> session.find(Employee.class, employee.getId())
+                        .invoke(e -> {
+                            e.setLogin(updateEmployee.getLogin());
+                            e.setName(updateEmployee.getName());
+                            e.setPassword(updateEmployee.getPassword());
                         })
         ).await().indefinitely();
     }
@@ -72,7 +69,7 @@ public class CarDao implements Dao<Car> {
     @Override
     public void delete(Integer id) {
         sessionFactory.withTransaction(
-                session -> session.find(Car.class, id)
+                session -> session.find(Employee.class, id)
                         .chain(session::remove)
         ).await().indefinitely();
         log.trace("deleted");
@@ -81,7 +78,7 @@ public class CarDao implements Dao<Car> {
     @Override
     public void deleteAll() {
         sessionFactory.withTransaction(
-                        (session, tx) -> session.createQuery("delete Car").executeUpdate())
+                        (session, tx) -> session.createQuery("delete Employee").executeUpdate())
                 .await().indefinitely();
     }
 }

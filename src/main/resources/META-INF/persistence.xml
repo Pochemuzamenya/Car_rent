@@ -7,6 +7,9 @@
 
         <class>org.hibernate.reactive.example.session.Employee</class>
         <class>org.hibernate.reactive.example.session.Car</class>
+        <class>org.hibernate.reactive.example.session.Order</class>
+        <class>org.hibernate.reactive.example.session.Customer</class>
+        <class>org.hibernate.reactive.example.session.Branch</class>
 
         <properties>
             <!-- MySQL -->

@@ -1,5 +1,6 @@
-package filatov.pm.rentcar.DAO;
+package filatov.pm.rentcar.DAO.serviceImpl;
 
+import filatov.pm.rentcar.DAO.dao.Dao;
 import filatov.pm.rentcar.entity.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class EmployeeDaoImpl implements Dao<Employee>{
+public class EmployeeService implements Dao<Employee> {
 
     Dao<Employee> employeeDao;
 
