@@ -67,6 +67,8 @@ public class Order {
         this.title = car.getMark() + " " + car.getModel() + " " + state.toString() + " " + gaveOutDate.toString() + " " + refundDate.toString() ;
     }
 
+    // TODO: 04.05.2022 refactor: add methods for set fields: gaveOutDate, refundDate, deposit, state, fine, payment
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
