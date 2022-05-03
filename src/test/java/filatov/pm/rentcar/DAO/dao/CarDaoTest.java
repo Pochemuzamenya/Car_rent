@@ -1,5 +1,7 @@
-package filatov.pm.rentcar.DAO;
+package filatov.pm.rentcar.DAO.dao;
 
+import filatov.pm.rentcar.DAO.dao.CarDao;
+import filatov.pm.rentcar.DAO.dao.Dao;
 import filatov.pm.rentcar.entity.Car;
 import filatov.pm.rentcar.entity.Status;
 import org.apache.logging.log4j.LogManager;
@@ -54,6 +56,7 @@ public class CarDaoTest {
 
     @Test
     public void save() {
+
         service.save(car3);
         logger.info(car3 + " saved");
     }

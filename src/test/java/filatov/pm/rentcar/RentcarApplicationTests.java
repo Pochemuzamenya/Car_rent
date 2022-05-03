@@ -1,6 +1,7 @@
 package filatov.pm.rentcar;
 
-import filatov.pm.rentcar.DAO.EmployeeDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.reactive.mutiny.Mutiny;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class RentcarApplicationTests {
 
-	@Autowired
-	Mutiny.SessionFactory sessionFactory;
+	private static final Logger log = LogManager.getLogger();
 
 	@Autowired
-	EmployeeDaoImpl employeeDao;
+	Mutiny.SessionFactory sessionFactory;
 
 	@Test
 	void contextLoads() {
 		assertThat(sessionFactory).isNotNull();
-		assertThat(employeeDao).isNotNull();
 	}
 }

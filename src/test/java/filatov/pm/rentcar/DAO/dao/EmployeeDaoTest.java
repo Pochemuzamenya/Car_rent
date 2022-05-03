@@ -1,16 +1,13 @@
-package filatov.pm.rentcar.DAO;
+package filatov.pm.rentcar.DAO.dao;
 
+import filatov.pm.rentcar.DAO.dao.Dao;
+import filatov.pm.rentcar.DAO.dao.EmployeeDao;
 import filatov.pm.rentcar.entity.Employee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.reactive.mutiny.Mutiny;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeDaoTest {
+    private static final Logger logger = LogManager.getLogger();
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("factory");
 
@@ -53,6 +51,7 @@ public class EmployeeDaoTest {
     public void findByName(){
         Optional<Employee> pepega = service.findByName("pepega");
         assert pepega.isPresent() && pepega.get().getName().equals("pepega");
+        logger.info(pepega);
     }
 
     @Test
@@ -78,5 +77,6 @@ public class EmployeeDaoTest {
     public void findById(){
         Optional<Employee> byId = service.findById(2);
         assert byId.isPresent() && byId.get().equals(employee2);
+        logger.info(byId.get());
     }
 }
