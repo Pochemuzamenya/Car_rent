@@ -4,49 +4,49 @@ import filatov.pm.rentcar.DAO.dao.Dao;
 import filatov.pm.rentcar.entity.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
 
-@Component
+
+@Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class EmployeeService implements Dao<Employee> {
+@Transactional
+public class EmployeeService {
 
-    Dao<Employee> employeeDao;
+    private Dao<Employee> employeeDao;
 
-    @Override
-    public void save(Employee employee) {
+    public Mono<Employee> save(Employee employee) {
         employeeDao.save(employee);
+        return Mono.just(employee);
     }
 
-    @Override
-    public Optional<Employee> findById(Integer id) {
-        return employeeDao.findById(id);
+    public Mono<Employee> findById(Integer id) {
+        return  Mono.just(employeeDao.findById(id).orElseThrow());
     }
 
-    @Override
-    public Optional<Employee> findByName(String name) {
-        return employeeDao.findByName(name);
+    public Mono<Employee> findByName(String name) {
+        return Mono.just(employeeDao.findByName(name).orElseThrow());
     }
 
-    @Override
-    public List<Employee> findAll() {
-        return employeeDao.findAll();
+    public Flux<Employee> findAll() {
+        return Flux.fromIterable(employeeDao.findAll());
     }
 
-    @Override
     public void update(Employee employee, Employee e) {
         employeeDao.update(employee, e);
     }
 
-    @Override
-    public void delete(Integer id) {
+    public Mono<Employee> delete(Integer id) {
         employeeDao.delete(id);
+        return Mono.empty();
     }
 
-    @Override
     public void deleteAll() {
         employeeDao.deleteAll();
     }
+
+    // TODO: 08.05.2022 refactor update
 }
