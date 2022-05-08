@@ -23,7 +23,7 @@ public class Employee {
     @NotNull @Size(max = 100)
     private String login;
     @NotNull @Size(min = 8)
-    private  String password;
+    private String password;
 
     @Override
     public boolean equals(Object o) {

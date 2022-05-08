@@ -1,6 +1,9 @@
 package filatov.pm.rentcar.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +14,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -34,6 +36,7 @@ public class Branch {
     private City city;
     @OneToMany(mappedBy = "branch")
     private Set<Order> orders;
+    private Double balance;
 
     public void addCar(Car car) {
         this.cars.add(car);
@@ -64,5 +67,13 @@ public class Branch {
     @Override
     public int hashCode() {
         return Objects.hash(title, cars, staff, customers, city, orders);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "title = " + title + ", " +
+                "city = " + city + ")";
     }
 }

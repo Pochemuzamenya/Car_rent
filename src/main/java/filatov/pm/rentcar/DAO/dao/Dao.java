@@ -19,4 +19,6 @@ public interface Dao<T> {
     void delete(Integer id);
 
     void deleteAll();
+
+    // TODO: 04.05.2022 perform a refactor 'update'
 }
