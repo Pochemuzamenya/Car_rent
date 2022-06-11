@@ -1,10 +1,8 @@
 package filatov.pm.rentcar.handlers;
 
-import filatov.pm.rentcar.DAO.dao.Dao;
-import filatov.pm.rentcar.DAO.serviceImpl.EmployeeService;
+import filatov.pm.rentcar.DAO.serviceImpl.reactive.ReactiveEmployeeService;
 import filatov.pm.rentcar.entity.Employee;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,9 +13,9 @@ import reactor.core.publisher.Mono;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class EmployeeHandler {
+public class EmployeeHandler implements Handler{
 
-    private EmployeeService service;
+    private ReactiveEmployeeService service;
 
     public Mono<ServerResponse> getAll(ServerRequest request) {
         return ServerResponse
