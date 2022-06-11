@@ -55,13 +55,13 @@ public class EmployeeDao implements Dao<Employee> {
     }
 
     @Override
-    public void update(Employee employee, Employee updateEmployee) {
+    public void update(Integer id, Employee employee) {
         sessionFactory.withTransaction(
-                session -> session.find(Employee.class, employee.getId())
+                session -> session.find(Employee.class, id)
                         .invoke(e -> {
-                            e.setLogin(updateEmployee.getLogin());
-                            e.setName(updateEmployee.getName());
-                            e.setPassword(updateEmployee.getPassword());
+                            e.setLogin(employee.getLogin());
+                            e.setName(employee.getName());
+                            e.setPassword(employee.getPassword());
                         })
         ).await().indefinitely();
     }
@@ -72,7 +72,7 @@ public class EmployeeDao implements Dao<Employee> {
                 session -> session.find(Employee.class, id)
                         .chain(session::remove)
         ).await().indefinitely();
-        log.trace("deleted");
+        log.info("Employee with id: " + id + " deleted");
     }
 
     @Override

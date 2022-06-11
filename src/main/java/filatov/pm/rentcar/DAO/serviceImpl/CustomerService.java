@@ -5,47 +5,44 @@ import filatov.pm.rentcar.entity.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class CustomerService implements Dao<Customer> {
+@Transactional
+public class CustomerService {
 
-    Dao<Customer> customerDao;
+    private Dao<Customer> customerDao;
 
-    @Override
-    public void save(Customer customer) {
+    public Mono<Customer> save(Customer customer) {
         customerDao.save(customer);
+        return Mono.just(customer);
     }
 
-    @Override
     public Optional<Customer> findById(Integer id) {
         return customerDao.findById(id);
     }
 
-    @Override
     public Optional<Customer> findByName(String name) {
         return customerDao.findByName(name);
     }
 
-    @Override
     public List<Customer> findAll() {
         return customerDao.findAll();
     }
 
-    @Override
-    public void update(Customer customer, Customer e) {
-        customerDao.update(customer,e);
+    public void update(Integer id, Customer e) {
+        customerDao.update(id,e);
     }
 
-    @Override
     public void delete(Integer id) {
         customerDao.delete(id);
     }
 
-    @Override
     public void deleteAll() {
         customerDao.deleteAll();
     }

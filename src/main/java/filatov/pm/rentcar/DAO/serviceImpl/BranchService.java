@@ -11,41 +11,34 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class BranchService implements Dao<Branch> {
+public class BranchService {
 
-    Dao<Branch> branchDao;
+    private Dao<Branch> branchDao;
 
-    @Override
     public void save(Branch branch) {
         branchDao.save(branch);
     }
 
-    @Override
     public Optional<Branch> findById(Integer id) {
         return branchDao.findById(id);
     }
 
-    @Override
     public Optional<Branch> findByName(String name) {
         return branchDao.findByName(name);
     }
 
-    @Override
     public List<Branch> findAll() {
         return branchDao.findAll();
     }
 
-    @Override
-    public void update(Branch branch, Branch e) {
-        branchDao.update(branch,e);
+    public void update(Integer id, Branch e) {
+        branchDao.update(id,e);
     }
 
-    @Override
     public void delete(Integer id) {
         branchDao.delete(id);
     }
 
-    @Override
     public void deleteAll() {
         branchDao.deleteAll();
     }

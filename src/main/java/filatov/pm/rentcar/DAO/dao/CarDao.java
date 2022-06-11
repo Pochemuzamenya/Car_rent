@@ -55,17 +55,17 @@ public class CarDao implements Dao<Car> {
     }
 
     @Override
-    public void update(Car car, Car e) {
+    public void update(Integer id, Car car) {
         sessionFactory.withTransaction(
-                session -> session.find(Car.class, car.getId())
+                session -> session.find(Car.class, id)
                         .invoke(c -> {
-                            c.setCarBody(e.getCarBody());
-                            c.setMark(e.getMark());
-                            c.setModel(e.getModel());
-                            c.setReleaseDate(e.getReleaseDate());
-                            c.setStatus(e.getStatus());
-                            c.setRentalPrice(e.getRentalPrice());
-                            c.setState(e.getState());
+                            c.setCarBody(car.getCarBody());
+                            c.setMark(car.getMark());
+                            c.setModel(car.getModel());
+                            c.setReleaseDate(car.getReleaseDate());
+                            c.setStatus(car.getStatus());
+                            c.setRentalPrice(car.getRentalPrice());
+                            c.setState(car.getState());
                         })
         ).await().indefinitely();
     }

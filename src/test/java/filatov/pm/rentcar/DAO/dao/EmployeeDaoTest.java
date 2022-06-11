@@ -69,7 +69,7 @@ public class EmployeeDaoTest {
 
     @Test
     public void update() {
-        service.update(employee1, employee2);
+        service.update(employee1.getId(), employee2);
         Optional<Employee> byId = service.findById(employee1.getId());
         assert byId.isEmpty() || byId.get().equals(employee2);
     }

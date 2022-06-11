@@ -54,14 +54,14 @@ public class CustomerDao implements Dao<Customer>{
     }
 
     @Override
-    public void update(Customer customer, Customer e) {
+    public void update(Integer id, Customer customer) {
         sessionFactory.withTransaction(
-                session -> session.find(Customer.class, customer.getId())
+                session -> session.find(Customer.class, id)
                         .invoke(c -> {
-                            c.setName(e.getName());
-                            c.setState(e.getState());
-                            c.setOrders(e.getOrders());
-                            c.setBranches(e.getBranches());
+                            c.setName(customer.getName());
+                            c.setState(customer.getState());
+                            c.setOrders(customer.getOrders());
+                            c.setBranches(customer.getBranches());
                         })
         ).await().indefinitely();
     }

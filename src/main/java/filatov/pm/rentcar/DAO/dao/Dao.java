@@ -14,11 +14,10 @@ public interface Dao<T> {
 
     List<T> findAll();
 
-    void update(T t, T e);
+    void update(Integer id, T t);
 
     void delete(Integer id);
 
     void deleteAll();
 
-    // TODO: 04.05.2022 perform a refactor 'update'
 }

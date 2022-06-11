@@ -3,10 +3,10 @@ package filatov.pm.rentcar.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -51,23 +51,63 @@ public class Order {
     private Employee acceptedEmployee;
 
     public Order(Car car, Employee gaveOutEmployee, Customer customer, Branch branch, Employee acceptedEmployee) {
-        this.state = OrderState.IN_PROGRESS;
+        stateInProgress();
         this.car = car;
         this.gaveOutEmployee = gaveOutEmployee;
         this.customer = customer;
-        this.gaveOutDate = LocalDateTime.now();
-        this.refundDate = this.getGaveOutDate().plusDays(1L);
         this.factRefundDate = null;
-        this.deposit = car.getRentalPrice() / 10;
         this.payment = null;
         this.fine = null;
         this.carStatus = car.getStatus();
         this.branch = branch;
         this.acceptedEmployee = acceptedEmployee;
-        this.title = car.getMark() + " " + car.getModel() + " " + state.toString() + " " + gaveOutDate.toString() + " " + refundDate.toString() ;
     }
 
-    // TODO: 04.05.2022 refactor: add methods for set fields: gaveOutDate, refundDate, deposit, state, fine, payment
+    public void setupTitle() {
+        this.title = "\n" + car.getMark()
+                + " " + car.getModel()
+                + " \n" + "Статус " + state.toString()
+                + " \n" + "Дата выдачи: "
+                + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a"))
+                + " \n" + "Дата возврата: "
+                + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) ;
+    }
+
+    public void stateInProgress() {
+        this.state = OrderState.IN_PROGRESS;
+    }
+
+    public void stateInComplete() {
+        this.state = OrderState.COMPLETE;
+    }
+
+    public void setupGaveOutDate() {
+        this.gaveOutDate = LocalDateTime.now();
+    }
+
+    public void setupRefundDate() {
+        this.refundDate = this.getGaveOutDate().plusDays(1L);
+    }
+
+    public void setupFactRefundDate() {
+        this.factRefundDate = LocalDateTime.now().plusDays(3L);
+    }
+
+    public void calculateDeposit() {
+        this.deposit = car.getRentalPrice() / 10;
+    }
+
+    public void closeOrder() {
+        stateInComplete();
+        if (factRefundDate.isAfter(refundDate)) {
+            fine = deposit;
+            payment = car.getRentalPrice() + fine;
+        } else {
+            payment = car.getRentalPrice();
+        }
+        double balance = this.branch.getBalance() + payment;
+        this.branch.setBalance(balance);
+    }
 
     @Override
     public String toString() {
@@ -75,9 +115,9 @@ public class Order {
                 "id = " + id + ", " +
                 "state = " + state + ", " +
                 "title = " + title + ", " +
-                "gaveOutDate = " + gaveOutDate + ", " +
-                "refundDate = " + refundDate + ", " +
-                "factRefundDate = " + factRefundDate + ", " +
+                "gaveOutDate = " + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                "refundDate = " + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                "factRefundDate = " + factRefundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
                 "deposit = " + deposit + ", " +
                 "payment = " + payment + ", " +
                 "fine = " + fine + ", " +

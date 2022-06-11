@@ -83,7 +83,7 @@ public class CarDaoTest {
 
     @Test
     public void update() {
-        service.update(car1, car2);
+        service.update(car1.getId(), car2);
         Optional<Car> byId = service.findById(car1.getId());
         assert byId.isEmpty() || byId.get().equals(car2);
         logger.info(byId.get());

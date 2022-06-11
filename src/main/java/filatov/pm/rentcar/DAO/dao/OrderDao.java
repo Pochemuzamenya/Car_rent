@@ -55,8 +55,11 @@ public class OrderDao implements Dao<Order>{
     }
 
     @Override
-    public void update(Order order, Order e) {
-
+    public void update(Integer id, Order order) {
+        sessionFactory.withTransaction(
+                session -> session.find(Order.class, id)
+                        .invoke(o -> o.setTitle(order.getTitle()))
+        ).await().indefinitely();
     }
 
     @Override

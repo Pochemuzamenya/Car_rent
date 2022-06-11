@@ -35,8 +35,8 @@ public class EmployeeService {
         return Flux.fromIterable(employeeDao.findAll());
     }
 
-    public void update(Employee employee, Employee e) {
-        employeeDao.update(employee, e);
+    public void update(Integer id, Employee e) {
+        employeeDao.update(id, e);
     }
 
     public Mono<Employee> delete(Integer id) {

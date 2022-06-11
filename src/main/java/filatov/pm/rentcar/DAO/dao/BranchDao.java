@@ -55,7 +55,7 @@ public class BranchDao implements Dao<Branch>{
     }
 
     @Override
-    public void update(Branch branch, Branch e) {
+    public void update(Integer id, Branch branch) {
 
     }
 

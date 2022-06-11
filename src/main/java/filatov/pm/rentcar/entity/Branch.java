@@ -8,9 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,16 +24,16 @@ public class Branch {
     private String title;
     @OneToMany
     @JoinColumn(name = "car_id")
-    private List<Car> cars;
+    private List<Car> cars = new ArrayList<>();
     @OneToMany
     @JoinColumn(name = "employee_id")
-    private Set<Employee> staff;
+    private Set<Employee> staff = new HashSet<>();
     @ManyToMany
-    private Set<Customer> customers;
+    private Set<Customer> customers = new HashSet<>();
     @NotNull
     private City city;
     @OneToMany(mappedBy = "branch")
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
     private Double balance;
 
     public void addCar(Car car) {

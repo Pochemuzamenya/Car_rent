@@ -11,41 +11,34 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class OrderService implements Dao<Order> {
+public class OrderService {
 
-    Dao<Order> orderDao;
+    private Dao<Order> orderDao;
 
-    @Override
     public void save(Order order) {
         orderDao.save(order);
     }
 
-    @Override
     public Optional<Order> findById(Integer id) {
         return orderDao.findById(id);
     }
 
-    @Override
     public Optional<Order> findByName(String name) {
         return orderDao.findByName(name);
     }
 
-    @Override
     public List<Order> findAll() {
         return orderDao.findAll();
     }
 
-    @Override
-    public void update(Order order, Order e) {
-        orderDao.update(order, e);
+    public void update(Integer id, Order e) {
+        orderDao.update(id, e);
     }
 
-    @Override
     public void delete(Integer id) {
         orderDao.delete(id);
     }
 
-    @Override
     public void deleteAll() {
         orderDao.deleteAll();
     }
