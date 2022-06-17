@@ -1,6 +1,9 @@
 package filatov.pm.rentcar.DAO.dao;
 
-import filatov.pm.rentcar.entity.*;
+import filatov.pm.rentcar.entity.Branch;
+import filatov.pm.rentcar.entity.Customer;
+import filatov.pm.rentcar.entity.CustomerState;
+import filatov.pm.rentcar.entity.Order;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.reactive.mutiny.Mutiny;
@@ -9,13 +12,9 @@ import org.junit.Test;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class CustomerDaoTest {
 
@@ -54,8 +53,10 @@ public class CustomerDaoTest {
     @Test
     public void findById() {
         Optional<Customer> byId = service.findById(1);
+        Customer customer1 = byId.get();
 
-        logger.info(byId.get().getBranches());
+        logger.info(byId.get());
+        logger.info(customer1);
 
     }
 

@@ -15,7 +15,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class AbstractHandler<T> implements Handler {
 
     final Class<T> typeParameterClass = ((Class) ((ParameterizedType) getClass()
-            .getGenericSuperclass()).getActualTypeArguments()[0]);;
+            .getGenericSuperclass()).getActualTypeArguments()[0]);
 
     private ReactiveService<T> service;
 

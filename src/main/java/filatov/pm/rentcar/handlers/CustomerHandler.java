@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerHandler extends AbstractHandler<Customer> implements Handler{
-
     public CustomerHandler(ReactiveService<Customer> service) {
         super(service);
     }
+
 }
