@@ -11,7 +11,8 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "orders")
+@Entity
+@Table(name = "orders")
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -64,9 +65,10 @@ public class Order {
     }
 
     public void setupTitle() {
-        this.title = "\n" + car.getMark()
+        this.title = "\n" + "Заказ:"
+                + "\n" + car.getMark()
                 + " " + car.getModel()
-                + " \n" + "Статус " + state.toString()
+                + " \n" + "Статус: " + state.toString()
                 + " \n" + "Дата выдачи: "
                 + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a"))
                 + " \n" + "Дата возврата: "
@@ -111,17 +113,42 @@ public class Order {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "state = " + state + ", " +
-                "title = " + title + ", " +
-                "gaveOutDate = " + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
-                "refundDate = " + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
-                "factRefundDate = " + factRefundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
-                "deposit = " + deposit + ", " +
-                "payment = " + payment + ", " +
-                "fine = " + fine + ", " +
-                "carStatus = " + carStatus + ", " +
-                "branch = " + branch + ")";
+        switch (this.state){
+            case COMPLETE -> {
+                return getClass().getSimpleName() + "(" +
+                        "id = " + id + ", " +
+                        "state = " + state + ", " +
+                        "gaveOutDate = " + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "refundDate = " + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "factRefundDate = " + factRefundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "deposit = " + deposit + ", " +
+                        "payment = " + payment + ", " +
+                        "fine = " + fine + ", " +
+                        "carStatus = " + carStatus + ", " +
+                        "branch = " + branch + ")";
+            }
+            case IN_PROGRESS -> {
+                return getClass().getSimpleName() + "(" +
+                        "id = " + id + ", " +
+                        "state = " + state + ", " +
+                        "gaveOutDate = " + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "refundDate = " + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "deposit = " + deposit + ", " +
+                        "carStatus = " + carStatus + ", " +
+                        "branch = " + branch + ")";
+            }
+            case EXPIRED -> {
+                return getClass().getSimpleName() + "(" +
+                        "id = " + id + ", " +
+                        "state = " + state + ", " +
+                        "gaveOutDate = " + gaveOutDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "refundDate = " + refundDate.format(DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a")) + ", " +
+                        "deposit = " + deposit + ", " +
+                        "fine = " + fine + ", " +
+                        "carStatus = " + carStatus + ", " +
+                        "branch = " + branch + ")";
+            }
+        }
+        return "Error";
     }
 }
