@@ -1,5 +1,9 @@
-package filatov.pm.rentcar.entity;
+package filatov.pm.rentcar.entity.Branch;
 
+import filatov.pm.rentcar.entity.car.Car;
+import filatov.pm.rentcar.entity.customer.Customer;
+import filatov.pm.rentcar.entity.employee.Employee;
+import filatov.pm.rentcar.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +19,10 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="branches")
+@Table(name = "branches")
 public class Branch {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
     @Size(max = 100)
@@ -28,9 +33,11 @@ public class Branch {
     @OneToMany
     @JoinColumn(name = "employee_id")
     private Set<Employee> staff = new HashSet<>();
-    @ManyToMany
+    @OneToMany
+    @JoinColumn(name = "customer_id")
     private Set<Customer> customers = new HashSet<>();
     @NotNull
+    @Enumerated(EnumType.STRING)
     private City city;
     @OneToMany(mappedBy = "branch")
     private Set<Order> orders = new HashSet<>();
@@ -46,12 +53,33 @@ public class Branch {
 
     public void addCustomer(Customer customer) {
         this.customers.add(customer);
-        customer.addBranch(this);
     }
 
     public void addOrder(Order order) {
         this.orders.add(order);
         order.setBranch(this);
+    }
+
+    public Car findCar(String model, String mark, Integer releaseDate) {
+        return this.cars.stream()
+                .filter(car -> car.getModel().equals(model))
+                .filter(car -> car.getMark().equals(mark))
+                .filter(car -> car.getReleaseDate().equals(releaseDate))
+                .findFirst()
+                .orElseGet(Car::new);
+    }
+
+    public Employee findEmployee(String name) {
+        return this.staff.stream()
+                .filter(employee -> employee.getName().equals(name))
+                .findFirst()
+                .orElseGet(Employee::new);
+    }
+
+    public Customer findCustomer(String name) {
+        return this.customers.stream()
+                .filter(customer -> customer.getName().equals(name))
+                .findFirst().orElseGet(Customer::new);
     }
 
     @Override
@@ -73,5 +101,9 @@ public class Branch {
                 "id = " + id + ", " +
                 "title = " + title + ", " +
                 "city = " + city + ")";
+    }
+
+    public enum City {
+        Иркутск, Ангарск
     }
 }
