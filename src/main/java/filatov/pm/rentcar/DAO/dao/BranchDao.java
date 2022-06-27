@@ -1,7 +1,6 @@
 package filatov.pm.rentcar.DAO.dao;
 
-import filatov.pm.rentcar.entity.Branch;
-import filatov.pm.rentcar.entity.Customer;
+import filatov.pm.rentcar.entity.Branch.Branch;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +48,7 @@ public class BranchDao implements Dao<Branch>{
     @Override
     public List<Branch> findAll() {
         return sessionFactory.withTransaction(
-                session -> session.createQuery("SELECT b FROM Branch c", Branch.class)
+                session -> session.createQuery("SELECT b FROM Branch b", Branch.class)
                         .getResultList()
         ).await().indefinitely();
     }
