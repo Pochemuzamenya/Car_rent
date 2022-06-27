@@ -1,5 +1,10 @@
-package filatov.pm.rentcar.entity;
+package filatov.pm.rentcar.entity.order;
 
+import filatov.pm.rentcar.entity.Branch.Branch;
+import filatov.pm.rentcar.entity.Status;
+import filatov.pm.rentcar.entity.car.Car;
+import filatov.pm.rentcar.entity.customer.Customer;
+import filatov.pm.rentcar.entity.employee.Employee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,19 +56,6 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY)
     private Employee acceptedEmployee;
 
-    public Order(Car car, Employee gaveOutEmployee, Customer customer, Branch branch, Employee acceptedEmployee) {
-        stateInProgress();
-        this.car = car;
-        this.gaveOutEmployee = gaveOutEmployee;
-        this.customer = customer;
-        this.factRefundDate = null;
-        this.payment = null;
-        this.fine = null;
-        this.carStatus = car.getStatus();
-        this.branch = branch;
-        this.acceptedEmployee = acceptedEmployee;
-    }
-
     public void setupTitle() {
         this.title = "\n" + "Заказ:"
                 + "\n" + car.getMark()
@@ -81,6 +73,10 @@ public class Order {
 
     public void stateInComplete() {
         this.state = OrderState.COMPLETE;
+    }
+
+    public void stateExpired() {
+        this.state = OrderState.EXPIRED;
     }
 
     public void setupGaveOutDate() {
