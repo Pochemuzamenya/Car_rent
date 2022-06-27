@@ -1,7 +1,7 @@
 package filatov.pm.rentcar.DAO.serviceImpl;
 
 import filatov.pm.rentcar.DAO.dao.Dao;
-import filatov.pm.rentcar.entity.Branch;
+import filatov.pm.rentcar.entity.Branch.Branch;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
