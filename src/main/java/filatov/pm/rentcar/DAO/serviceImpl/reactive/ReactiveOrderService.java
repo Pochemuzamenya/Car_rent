@@ -1,7 +1,7 @@
 package filatov.pm.rentcar.DAO.serviceImpl.reactive;
 
 import filatov.pm.rentcar.DAO.dao.Dao;
-import filatov.pm.rentcar.entity.Order;
+import filatov.pm.rentcar.entity.order.Order;
 import org.springframework.stereotype.Component;
 
 @Component

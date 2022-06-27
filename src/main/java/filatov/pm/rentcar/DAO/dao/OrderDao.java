@@ -1,6 +1,6 @@
 package filatov.pm.rentcar.DAO.dao;
 
-import filatov.pm.rentcar.entity.Order;
+import filatov.pm.rentcar.entity.order.Order;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

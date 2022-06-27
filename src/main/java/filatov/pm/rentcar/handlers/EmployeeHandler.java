@@ -1,7 +1,7 @@
 package filatov.pm.rentcar.handlers;
 
 import filatov.pm.rentcar.DAO.serviceImpl.reactive.ReactiveEmployeeService;
-import filatov.pm.rentcar.entity.Employee;
+import filatov.pm.rentcar.entity.employee.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

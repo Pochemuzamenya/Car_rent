@@ -1,4 +1,4 @@
-package filatov.pm.rentcar.entity;
+package filatov.pm.rentcar.entity.employee;
 
 import lombok.*;
 
