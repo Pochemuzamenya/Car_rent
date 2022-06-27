@@ -1,5 +1,7 @@
-package filatov.pm.rentcar.entity;
+package filatov.pm.rentcar.entity.customer;
 
+import filatov.pm.rentcar.entity.Branch.Branch;
+import filatov.pm.rentcar.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +30,6 @@ public class Customer {
     private CustomerState state;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
-    @ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL)
-    private Set<Branch> branches = new HashSet<>();
 
     public void addOrder(Order order) {
         this.orders.add(order);
@@ -41,21 +41,17 @@ public class Customer {
         order.setCustomer(null);
     }
 
-    public void addBranch(Branch branch) {
-        this.branches.add(branch);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return name.equals(customer.name) && state == customer.state && Objects.equals(orders, customer.orders) && Objects.equals(branches, customer.branches);
+        return name.equals(customer.name) && state == customer.state && Objects.equals(orders, customer.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, state, orders, branches);
+        return Objects.hash(name, state, orders);
     }
 
     @Override
