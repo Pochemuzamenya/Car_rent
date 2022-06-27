@@ -1,5 +1,6 @@
-package filatov.pm.rentcar.entity;
+package filatov.pm.rentcar.entity.car;
 
+import filatov.pm.rentcar.entity.Status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +26,6 @@ public class Car {
     private Integer releaseDate;
     @NotNull @Size(max = 50)
     private String carBody;
-    @NotNull
     private Double rentalPrice;
     @Enumerated(EnumType.STRING)
     private Status status;
