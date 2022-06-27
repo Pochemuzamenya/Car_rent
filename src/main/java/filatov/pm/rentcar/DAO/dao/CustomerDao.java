@@ -1,6 +1,6 @@
 package filatov.pm.rentcar.DAO.dao;
 
-import filatov.pm.rentcar.entity.Customer;
+import filatov.pm.rentcar.entity.customer.Customer;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,7 +61,6 @@ public class CustomerDao implements Dao<Customer>{
                             c.setName(customer.getName());
                             c.setState(customer.getState());
                             c.setOrders(customer.getOrders());
-                            c.setBranches(customer.getBranches());
                         })
         ).await().indefinitely();
     }
